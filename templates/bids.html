@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Bids{% endblock %}
+{% block content %}
+    <ul>
+    {% for bid in bids %}
+        <li>{{ bid }}</li>
+
+    {% endfor %}
+    </ul>
+
+{% endblock %}
