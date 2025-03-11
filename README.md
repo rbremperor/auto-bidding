@@ -1,7 +1,3 @@
-Here’s a brief **README.md** for your project:  
-
----
-
 # 🚀 Bidding API  
 
 ## 📌 Overview  
