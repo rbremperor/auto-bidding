@@ -57,7 +57,3 @@ Bidding API is a Django-based web application that allows users to register and 
 
 ## 📜 License  
 This project is open-source. Feel free to modify and improve it!  
-
----
-
-Let me know if you need any modifications! 🚀
