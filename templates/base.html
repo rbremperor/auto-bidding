@@ -18,12 +18,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'plates-list' %}">Plates</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'bids-list' %}">My Bids</a></li>
-                    {% if request.user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="/logout/">Logout</a></li>
+                    {% if request.user.is_staff %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'plates-list' %}">Plates</a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="/login/">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'bids-list' %}">My Bids</a></li>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
                     {% endif %}
                 </ul>
             </div>

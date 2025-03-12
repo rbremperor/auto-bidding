@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place bid</title>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4">Place a Bid for {{ plate.plate_number }}</h2>
+    <p><strong>Description:</strong> {{ plate.description }}</p>
+    <p><strong>Highest Bid:</strong> {{ plate.highest_bid|default:"No bids yet" }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_amount" class="form-label">Your Bid Amount:</label>
+            {{ form.amount }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Place Bid</button>
+
+    </form>
+
+    <a href="{% url 'bids-list' %}" class="btn btn-secondary mt-3">Back to Bids</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Update Bid{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Update Your Bid for {{ plate.plate_number }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_amount" class="form-label">Bid Amount:</label>
+            {{ form.amount }}
+        </div>
+        <button type="submit" class="btn btn-success">Update Bid</button>
+        <a href="{% url 'bids-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

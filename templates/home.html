@@ -1,37 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Bidding API</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="#">Bidding API</a>
-            <a href="{% url 'register' %}" style="color: white;">Register</a>
-        </div>
-    </nav>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
 
-    <div class="container text-center mt-5">
-        <div class="card shadow-lg p-4">
-            <h1 class="mb-3">Welcome to the Bidding API</h1>
-            <p class="lead">Top 10 Plates Available:</p>
-            <ul class="list-group mt-3">
-                {% for bid in bids %}
-                    <li class="list-group-item">{{ bid.plate }} - ${{ bid.amount }}</li>
-                {% endfor %}
-            </ul>
-            <div class="mt-4">
-                <a href="{% url 'bids-list' %}" class="btn btn-primary m-2">View Bids</a>
-                <a href="{% url 'plates-list' %}" class="btn btn-success m-2">View All Plates</a>
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Welcome, {{ request.user.username }}</h2>
+
+    {% if request.user.is_authenticated %}
+        {% if request.user.is_staff %}
+            <p>You can add plates but cannot place bids.</p>
+        {% else %}
+            <p>You can place bids but cannot add plates.</p>
+        {% endif %}
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a>.</p>
+    {% endif %}
+
+    <h3 class="mt-4">Available Plates</h3>
+    <div class="row">
+        {% for plate in plates %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ plate.plate_number }}</h5>
+                        <p class="card-text">{{ plate.description }}</p>
+                        <p><strong>Deadline:</strong> {{ plate.deadline }}</p>
+                        <p><strong>Highest Bid:</strong> {{ plate.highest_bid|default:"No bids yet" }}</p>
+
+                        {% if not request.user.is_staff %}
+                            <a href="{% url 'place_bid' plate.id %}" class="btn btn-success">Place Bid</a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-        </div>
+        {% empty %}
+            <p>No plates available.</p>
+        {% endfor %}
     </div>
-
-    <!-- Bootstrap JS Bundle (Optional for additional features) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}

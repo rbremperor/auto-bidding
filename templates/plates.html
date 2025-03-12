@@ -1,46 +1,38 @@
 {% extends "base.html" %}
-{% load static %}
-
-{% block title %}Auto Plates - Bidding{% endblock %}
+{% block title %}My Plates{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2 class="mt-4">Auto Plates</h2>
+    <h2 class="mt-4">My Plates</h2>
 
-    <!-- Form to Add a New Plate (Admin Only) -->
-    {% if request.user.is_staff %}
+    <!-- Form to Add a New Plate -->
     <div class="card mt-3">
         <div class="card-header">
             <h4>Add a New Plate</h4>
         </div>
         <div class="card-body">
-            <form id="plateForm">
-                <div class="mb-3">
-                    <label for="plate_number" class="form-label">Plate Number:</label>
-                    <input type="text" class="form-control" id="plate_number" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description:</label>
-                    <textarea class="form-control" id="description" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="deadline" class="form-label">Bidding Deadline:</label>
-                    <input type="datetime-local" class="form-control" id="deadline" required>
-                </div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">Add Plate</button>
             </form>
         </div>
     </div>
-    {% endif %}
 
-    <!-- List of Auto Plates -->
+    <!-- List of Plates -->
     <div class="mt-5">
-        <h3>Available Plates</h3>
+        <h3>My Created Plates</h3>
         {% for plate in plates %}
-        <div id="platesList" class="row">{{ plate_number }}</div>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ plate.plate_number }}</h5>
+                <p class="card-text">{{ plate.description }}</p>
+                <p><strong>Deadline:</strong> {{ plate.deadline }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p>No plates created yet.</p>
         {% endfor %}
     </div>
 </div>
-
-{#<script src="{% static 'js/plates.js' %}"></script>#}
 {% endblock %}

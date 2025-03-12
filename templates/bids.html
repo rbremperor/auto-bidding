@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
-{% block title %}Bids{% endblock %}
+{% block title %}My Bids{% endblock %}
+
 {% block content %}
-    <ul>
-    {% for bid in bids %}
-        <li>{{ bid }}</li>
+<div class="container">
+    <h2 class="mt-4">My Bids</h2>
+    <div class="row">
+        {% for bid in bids %}
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ bid.plate.plate_number }}</h5>
+                    <p class="card-text">{{ bid.plate.description }}</p>
+                    <p><strong>Highest Bid:</strong>
+                        {% if bid.plate.highest_bid  %}
+                            {{ bid.plate.highest_bid }}
+                        {% else %}
+                            "No bids yet"
+                        {% endif %}
 
-    {% endfor %}
-    </ul>
-
+                    </p>
+                    <a href="{% url 'update_bid' bid.id %}" class="btn btn-warning btn-sm">Edit Bid</a>
+                    <form action="{% url 'delete_bid' bid.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Delete Bid{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Delete Bid</h2>
+    <p>Are you sure you want to delete your bid on <strong>{{ bid.plate.plate_number }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'bids-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
