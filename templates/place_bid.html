@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Place bid</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Place a Bid{% endblock %}
+
+{% block content %}
 <div class="container">
     <h2 class="mt-4">Place a Bid for {{ plate.plate_number }}</h2>
+
     <p><strong>Description:</strong> {{ plate.description }}</p>
-    <p><strong>Highest Bid:</strong> {{ plate.highest_bid|default:"No bids yet" }}</p>
+    <p><strong>Highest Bid:</strong>
+        {% if plate.highest_bid %}
+            {{ plate.highest_bid }}
+        {% else %}
+            No bids yet
+        {% endif %}
+    </p>
 
     <form method="post">
         {% csrf_token %}
@@ -18,10 +23,7 @@
         </div>
 
         <button type="submit" class="btn btn-success">Place Bid</button>
-
+        <a href="{% url 'bids-list' %}" class="btn btn-secondary">Cancel</a>
     </form>
-
-    <a href="{% url 'bids-list' %}" class="btn btn-secondary mt-3">Back to Bids</a>
 </div>
-</body>
-</html>
+{% endblock %}

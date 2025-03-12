@@ -60,7 +60,7 @@ def logout_view(request):
     return redirect('login')
 
 def home(request):
-    plates = Plate.objects.order_by('-id')[:10]
+    plates = Plate.objects.all
     return render(request, 'home.html', {'plates': plates})
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -146,7 +146,7 @@ def update_bid(request, bid_id):
         if form.is_valid() and form.cleaned_data["amount"] > (plate.highest_bid or 0):
             form.save()
 
-            # Update highest bid
+            # Update the highest bid
             highest_bid = plate.bids.order_by('-amount').first()
             if highest_bid:
                 plate.highest_bid = highest_bid.amount
