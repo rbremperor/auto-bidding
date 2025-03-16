@@ -12,8 +12,8 @@ Bidding API is a Django-based web application that allows users to register and 
 ## 📦 Installation  
 1. **Clone the repository**  
    ```bash
-   git clone https://github.com/your-repo/bidding-api.git
-   cd bidding-api
+   git clone https://github.com/rbremperor/auto-bidding.git
+   cd auto-bidding
    ```
 
 2. **Create a virtual environment & activate it**  
